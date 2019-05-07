@@ -1,0 +1,8 @@
+preset: recommended
+
+risky: true
+
+disabled:
+  - single_quote
+  - align_double_arrow
+  - align_phpdoc

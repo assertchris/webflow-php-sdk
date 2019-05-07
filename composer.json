@@ -1,0 +1,23 @@
+{
+    "name": "gitstore/webflow",
+    "description": "A decent Webflow API client",
+    "license": "MIT",
+    "require": {
+        "phpunit/phpunit": "^8.1",
+        "guzzlehttp/guzzle": "^6.3",
+        "nesbot/carbon": "^2.17"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gitstore\\Webflow\\": "source"
+        }
+    },
+    "require-dev": {
+        "vlucas/phpdotenv": "^3.3"
+    },
+    "autoload-dev": {
+        "files": [
+            "tests/TestCase.php"
+        ]
+    }
+}
