@@ -3,7 +3,6 @@
 namespace Gitstore\Webflow\Models;
 
 use Carbon\Carbon;
-use Gitstore\Webflow\Exception;
 use Gitstore\Webflow\Model;
 use Gitstore\Webflow\Response;
 

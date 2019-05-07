@@ -6,5 +6,4 @@ use Gitstore\WebFlow\Operation;
 
 class ItemDeleted implements Operation
 {
-
 }
