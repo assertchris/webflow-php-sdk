@@ -2,7 +2,7 @@
 
 namespace Gitstore\Webflow;
 
-use Exception as BaseException
+use Exception as BaseException;
 
 class Exception extends BaseException
 {
