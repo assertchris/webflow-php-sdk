@@ -6,5 +6,4 @@ use Gitstore\WebFlow\Operation;
 
 class ItemUpdated implements Operation
 {
-
 }

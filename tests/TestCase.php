@@ -7,7 +7,7 @@ abstract class TestCase extends BaseTestCase
 {
     public function setUp(): void
     {
-        $env = Dotenv::create(__DIR__ . "/..");
+        $env = Dotenv::create(__DIR__."/..");
         $env->load();
     }
 }

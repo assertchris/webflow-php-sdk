@@ -4,7 +4,6 @@ namespace Gitstore\Webflow\Iterators;
 
 use Gitstore\Webflow\Iterator;
 use Gitstore\Webflow\Models\Site;
-use Gitstore\Webflow\Response;
 
 class Sites extends Iterator
 {
