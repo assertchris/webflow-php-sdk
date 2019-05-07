@@ -2,8 +2,6 @@
 
 namespace Gitstore\Webflow;
 
-use Gitstore\Webflow\Response;
-
 abstract class Iterator implements \IteratorAggregate, \ArrayAccess
 {
     protected $response;
@@ -17,6 +15,7 @@ abstract class Iterator implements \IteratorAggregate, \ArrayAccess
     public function getIterator(): \Iterator
     {
         $this->warm();
+
         return new \ArrayIterator($this->cached);
     }
 
@@ -30,12 +29,14 @@ abstract class Iterator implements \IteratorAggregate, \ArrayAccess
     public function offsetExists($index)
     {
         $this->warm();
+
         return isset($this->cached[$index]);
     }
 
     public function offsetGet($index)
     {
         $this->warm();
+
         return $this->cached[$index];
     }
 
