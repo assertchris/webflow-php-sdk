@@ -9,13 +9,12 @@ use Gitstore\Webflow\Response;
 class Site extends Model
 {
     protected $response;
-
-    private $id;
-    private $name;
-    private $shortName;
-    private $previewUrl;
-    private $createdAt;
-    private $publishedAt;
+    protected $id;
+    protected $name;
+    protected $shortName;
+    protected $previewUrl;
+    protected $createdAt;
+    protected $publishedAt;
 
     public function __construct(Response $response)
     {

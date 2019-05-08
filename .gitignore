@@ -1,3 +1,4 @@
 /.env
 /.phpunit.*
+/coverage
 /vendor

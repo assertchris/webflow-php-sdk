@@ -15,7 +15,6 @@ abstract class Iterator implements \IteratorAggregate, \ArrayAccess
     public function getIterator(): \Iterator
     {
         $this->warm();
-
         return new \ArrayIterator($this->cached);
     }
 
@@ -29,14 +28,12 @@ abstract class Iterator implements \IteratorAggregate, \ArrayAccess
     public function offsetExists($index)
     {
         $this->warm();
-
         return isset($this->cached[$index]);
     }
 
     public function offsetGet($index)
     {
         $this->warm();
-
         return $this->cached[$index];
     }
 
@@ -55,11 +52,6 @@ abstract class Iterator implements \IteratorAggregate, \ArrayAccess
     public function __call(string $method, array $parameters = [])
     {
         return $this->response->{$method}(...$parameters);
-    }
-
-    public function __get(string $property)
-    {
-        return $this->response->{$property};
     }
 
     abstract protected function getGenerator(): \Generator;

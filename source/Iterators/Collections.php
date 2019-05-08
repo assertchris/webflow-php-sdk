@@ -2,18 +2,17 @@
 
 namespace Gitstore\Webflow\Iterators;
 
-use Iterator;
-use IteratorAggregate;
+use Gitstore\Webflow\Iterator;
+use Gitstore\Webflow\Models\Collection;
 
-class Collections implements IteratorAggregate
+class Collections extends Iterator
 {
-    public function __construct(array $items)
+    protected function getGenerator(): \Generator
     {
-        $this->items = $items;
-    }
-
-    public function getIterator(): Iterator
-    {
-        return new ArrayIterator($this->items);
+        foreach ($this->response->getData() as $item) {
+            yield new Collection(
+                $this->response->withBody(json_encode($item))
+            );
+        }
     }
 }

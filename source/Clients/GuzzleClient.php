@@ -70,10 +70,12 @@ class GuzzleClient implements GitstoreClient
 
     public function getCollections(string $siteId): Collections
     {
+        return new Collections($this->request("GET", "/sites/{$siteId}/collections"));
     }
 
     public function getCollection(string $collectionId): Collection
     {
+        return new Collection($this->request("GET", "/collections/{$collectionId}"));
     }
 
     public function getItems(string $collectionId): Items
