@@ -105,6 +105,7 @@ class GuzzleTest extends TestCase
 
     /**
      * @covers Gitstore\Webflow\Clients\Guzzle
+     * @covers Gitstore\Webflow\Operation
      * @covers Gitstore\Webflow\Response
      */
     public function testCanHandleItemCreateErrors()
@@ -142,7 +143,7 @@ class GuzzleTest extends TestCase
     /**
      * @covers Gitstore\Webflow\Clients\Guzzle
      * @covers Gitstore\Webflow\Iterator
-     * @covers Gitstore\Webflow\Iterators\Collections
+     * @covers Gitstore\Webflow\Iterators\Items
      * @covers Gitstore\Webflow\Response
      */
     public function testCanGetItems()
