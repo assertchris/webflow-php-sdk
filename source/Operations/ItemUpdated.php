@@ -2,8 +2,8 @@
 
 namespace Gitstore\Webflow\Operations;
 
-use Gitstore\WebFlow\Operation;
+use Gitstore\Webflow\Operation;
 
-class ItemUpdated implements Operation
+class ItemUpdated extends Operation
 {
 }

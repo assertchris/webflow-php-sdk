@@ -2,7 +2,7 @@
 
 namespace Gitstore\Webflow\Clients;
 
-use Gitstore\Webflow\Client as GitstoreClient;
+use Gitstore\Webflow\Client;
 use Gitstore\Webflow\Exception as GitstoreException;
 use Gitstore\Webflow\Iterators\Collections;
 use Gitstore\Webflow\Iterators\Items;
@@ -14,21 +14,21 @@ use Gitstore\Webflow\Operations\ItemCreated;
 use Gitstore\Webflow\Operations\ItemDeleted;
 use Gitstore\Webflow\Operations\ItemUpdated;
 use Gitstore\Webflow\Response;
-use GuzzleHttp\Client as BaseGuzzleClient;
+use GuzzleHttp\Client as BaseClient;
 
-class GuzzleClient implements GitstoreClient
+class Guzzle implements Client
 {
     private $token;
     private $guzzle;
     private $base = "https://api.webflow.com";
     private $version = "1.0.0";
 
-    public function __construct(string $token, BaseGuzzleClient $guzzle = null)
+    public function __construct(string $token, BaseClient $guzzle = null)
     {
         $this->token = $token;
 
         if (is_null($guzzle)) {
-            $this->guzzle = new BaseGuzzleClient([
+            $this->guzzle = new BaseClient([
                 "base_uri" => $this->base,
             ]);
         }
@@ -36,20 +36,23 @@ class GuzzleClient implements GitstoreClient
 
     private function request(string $method, string $path, array $data = []): Response
     {
+        $parameters = [
+            "headers" => [
+                "Authorization" => "Bearer {$this->token}",
+                "Accept-Version" => $this->version,
+                "Accept" => "application/json",
+                "Content-Type" => "application/json",
+            ],
+        ];
+
+        if ($method === "POST" || $method === "PUT" || $method === "PATCH") {
+            $parameters["body"] = json_encode($data);
+        }
+
         try {
-            $response = $this->guzzle->request($method, $path, [
-                "headers" => [
-                    "Authorization" => "Bearer {$this->token}",
-                    "Accept-Version" => $this->version,
-                    "Accept" => "application/json",
-                    "Content-Type" => "application/json",
-                ],
-            ]);
+            $response = $this->guzzle->request($method, $path, $parameters);
         } catch (\Exception $e) {
-            throw new GitstoreException(
-                $e->getMessage(),
-                $e->getLine()
-            );
+            throw new GitstoreException($e->getMessage(), $e->getCode(), $e);
         }
 
         return new Response(
@@ -80,6 +83,7 @@ class GuzzleClient implements GitstoreClient
 
     public function getItems(string $collectionId): Items
     {
+        return new Items($this->request("GET", "/collections/{$collectionId}/items"));
     }
 
     public function getItem(string $collectionId, string $itemId): Item
@@ -88,6 +92,22 @@ class GuzzleClient implements GitstoreClient
 
     public function createItem(string $collectionId, array $data): ItemCreated
     {
+        try {
+            return new ItemCreated($this->request("POST", "/collections/{$collectionId}/items", [
+                "fields" => array_merge([
+                    "_archived" => false,
+                    "_draft" => false,
+                ], $data),
+            ]), true);
+        }
+        catch (\Exception $e) {
+            $response = $e->getPrevious()->getResponse();
+
+            return new ItemCreated(new Response(
+                $response->getHeaders(),
+                (string) $response->getBody()
+            ), false);
+        }
     }
 
     public function updateItem(string $collectionId, string $itemId, array $data): ItemUpdated

@@ -15,6 +15,7 @@ class Site extends Model
     protected $previewUrl;
     protected $createdAt;
     protected $publishedAt;
+    protected $extra;
 
     public function __construct(Response $response)
     {
@@ -28,5 +29,16 @@ class Site extends Model
         $this->previewUrl = $data["previewUrl"];
         $this->createdAt = new Carbon($data["createdOn"], $data["timezone"]);
         $this->publishedAt = new Carbon($data["lastPublished"], $data["timezone"]);
+
+        unset(
+            $data["_id"],
+            $data["name"],
+            $data["shortName"],
+            $data["previewUrl"],
+            $data["createdOn"],
+            $data["lastPublished"]
+        );
+
+        $this->extra = $data;
     }
 }

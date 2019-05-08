@@ -15,6 +15,7 @@ class Collection extends Model
     protected $singularName;
     protected $createdAt;
     protected $updatedAt;
+    protected $extra;
 
     public function __construct(Response $response)
     {
@@ -28,5 +29,16 @@ class Collection extends Model
         $this->singularName = $data["singularName"];
         $this->createdAt = new Carbon($data["createdOn"]);
         $this->updatedAt = new Carbon($data["lastUpdated"]);
+
+        unset(
+            $data["_id"],
+            $data["name"],
+            $data["slug"],
+            $data["singularName"],
+            $data["createdOn"],
+            $data["lastUpdated"]
+        );
+
+        $this->extra = $data;
     }
 }

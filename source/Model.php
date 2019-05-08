@@ -14,5 +14,9 @@ abstract class Model
         if (property_exists($this, $property)) {
             return $this->{$property};
         }
+
+        if (isset($this->extra[$property])) {
+            return $this->extra[$property];
+        }
     }
 }

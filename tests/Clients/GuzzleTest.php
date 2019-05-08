@@ -1,7 +1,7 @@
 <?php
 
 use Carbon\Carbon;
-use Gitstore\Webflow\Clients\GuzzleClient;
+use Gitstore\Webflow\Clients\Guzzle;
 use Gitstore\Webflow\Iterators\Collections;
 use Gitstore\Webflow\Iterators\Items;
 use Gitstore\Webflow\Iterators\Sites;
@@ -12,15 +12,15 @@ use Gitstore\Webflow\Operations\ItemCreated;
 use Gitstore\Webflow\Operations\ItemDeleted;
 use Gitstore\Webflow\Operations\ItemUpdated;
 
-class GuzzleClientTest extends TestCase
+class GuzzleTest extends TestCase
 {
     private function getClient()
     {
-        return new GuzzleClient(getenv("WEBFLOW_TOKEN"));
+        return new Guzzle(getenv("WEBFLOW_TOKEN"));
     }
 
     /**
-     * @covers Gitstore\Webflow\Clients\GuzzleClient
+     * @covers Gitstore\Webflow\Clients\Guzzle
      * @covers Gitstore\Webflow\Iterator
      * @covers Gitstore\Webflow\Iterators\Sites
      * @covers Gitstore\Webflow\Response
@@ -28,6 +28,7 @@ class GuzzleClientTest extends TestCase
     public function testCanGetSites()
     {
         $client = $this->getClient();
+
         $sites = $client->getSites();
 
         $this->assertInstanceOf(Sites::class, $sites);
@@ -37,7 +38,7 @@ class GuzzleClientTest extends TestCase
     }
 
     /**
-     * @covers Gitstore\Webflow\Clients\GuzzleClient
+     * @covers Gitstore\Webflow\Clients\Guzzle
      * @covers Gitstore\Webflow\Model
      * @covers Gitstore\Webflow\Models\Site
      * @covers Gitstore\Webflow\Response
@@ -45,6 +46,7 @@ class GuzzleClientTest extends TestCase
     public function testCanGetSingleSite()
     {
         $client = $this->getClient();
+
         $site = $client->getSite(getenv("WEBFLOW_SITE_ID"));
 
         $this->assertInstanceOf(Site::class, $site);
@@ -60,7 +62,7 @@ class GuzzleClientTest extends TestCase
     }
 
     /**
-     * @covers Gitstore\Webflow\Clients\GuzzleClient
+     * @covers Gitstore\Webflow\Clients\Guzzle
      * @covers Gitstore\Webflow\Iterator
      * @covers Gitstore\Webflow\Iterators\Collections
      * @covers Gitstore\Webflow\Response
@@ -68,6 +70,7 @@ class GuzzleClientTest extends TestCase
     public function testCanGetCollections()
     {
         $client = $this->getClient();
+
         $collections = $client->getCollections(getenv("WEBFLOW_SITE_ID"));
 
         $this->assertInstanceOf(Collections::class, $collections);
@@ -77,7 +80,7 @@ class GuzzleClientTest extends TestCase
     }
 
     /**
-     * @covers Gitstore\Webflow\Clients\GuzzleClient
+     * @covers Gitstore\Webflow\Clients\Guzzle
      * @covers Gitstore\Webflow\Model
      * @covers Gitstore\Webflow\Models\Collection
      * @covers Gitstore\Webflow\Response
@@ -85,6 +88,7 @@ class GuzzleClientTest extends TestCase
     public function testCanGetSingleCollection()
     {
         $client = $this->getClient();
+
         $collection = $client->getCollection(getenv("WEBFLOW_COLLECTION_ID"));
 
         $this->assertInstanceOf(Collection::class, $collection);
@@ -97,5 +101,63 @@ class GuzzleClientTest extends TestCase
         $this->assertIsString($collection->singularName);
         $this->assertInstanceOf(Carbon::class, $collection->createdAt);
         $this->assertInstanceOf(Carbon::class, $collection->updatedAt);
+    }
+
+    /**
+     * @covers Gitstore\Webflow\Clients\Guzzle
+     * @covers Gitstore\Webflow\Response
+     */
+    public function testCanHandleItemCreateErrors()
+    {
+        $client = $this->getClient();
+
+        $data = json_decode(getenv("WEBFLOW_ITEM_CREATE_DATA_INVALID"), true);
+        $operation = $client->createItem(getenv("WEBFLOW_COLLECTION_ID"), $data);
+
+        $this->assertInstanceOf(ItemCreated::class, $operation);
+        $this->assertFalse($operation->wasSuccessful());
+        $this->assertIsString($operation->getData()["err"]);
+    }
+
+    /**
+     * @covers Gitstore\Webflow\Clients\Guzzle
+     * @covers Gitstore\Webflow\Model
+     * @covers Gitstore\Webflow\Models\Item
+     * @covers Gitstore\Webflow\Response
+     * @covers Gitstore\Webflow\Operation
+     * @covers Gitstore\Webflow\Operations\ItemCreated
+     */
+    public function testCanCreateItem()
+    {
+        $client = $this->getClient();
+
+        $data = json_decode(getenv("WEBFLOW_ITEM_CREATE_DATA_VALID"), true);
+        $operation = $client->createItem(getenv("WEBFLOW_COLLECTION_ID"), $data);
+
+        $this->assertInstanceOf(ItemCreated::class, $operation);
+        $this->assertTrue($operation->wasSuccessful());
+        $this->assertInstanceOf(Item::class, $operation->getModel());
+    }
+
+    /**
+     * @covers Gitstore\Webflow\Clients\Guzzle
+     * @covers Gitstore\Webflow\Iterator
+     * @covers Gitstore\Webflow\Iterators\Collections
+     * @covers Gitstore\Webflow\Response
+     */
+    public function testCanGetItems()
+    {
+        $client = $this->getClient();
+
+        $items = $client->getItems(getenv("WEBFLOW_COLLECTION_ID"));
+
+        $this->assertInstanceOf(Items::class, $items);
+        $this->assertIsInt($items->getRequestLimit());
+        $this->assertIsInt($items->getRequestsRemaining());
+        $this->assertIsInt($items->getCount());
+        $this->assertIsInt($items->getLimit());
+        $this->assertIsInt($items->getOffset());
+        $this->assertIsInt($items->getTotal());
+        $this->assertInstanceOf(Item::class, $items[0]);
     }
 }
