@@ -1,6 +1,6 @@
 {
     "name": "gitstore/webflow",
-    "description": "A decent Webflow API client",
+    "description": "A decent PHP Webflow client",
     "license": "MIT",
     "require": {
         "nesbot/carbon": "^2.17"
