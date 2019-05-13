@@ -23,6 +23,7 @@ abstract class Iterator implements ArrayAccess, Countable, IteratorAggregate
     public function getIterator(): BaseIterator
     {
         $this->warm();
+
         return new ArrayIterator($this->cached);
     }
 
@@ -36,12 +37,14 @@ abstract class Iterator implements ArrayAccess, Countable, IteratorAggregate
     public function offsetExists($index)
     {
         $this->warm();
+
         return isset($this->cached[$index]);
     }
 
     public function offsetGet($index)
     {
         $this->warm();
+
         return $this->cached[$index];
     }
 
@@ -59,6 +62,7 @@ abstract class Iterator implements ArrayAccess, Countable, IteratorAggregate
     public function count()
     {
         $this->warm();
+
         return count($this->cached);
     }
 
