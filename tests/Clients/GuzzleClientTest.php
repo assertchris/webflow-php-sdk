@@ -113,7 +113,6 @@ class GuzzleClientTest extends TestCase
 
         // test a few model things...
 
-
         $this->expectException(PropertyNotDefinedException::class);
         $site->missing;
     }
@@ -314,7 +313,7 @@ class GuzzleClientTest extends TestCase
         $model = $this->getItemModel();
 
         $item = $client->getItem(getenv("WEBFLOW_COLLECTION_ID"), $model->id);
-        
+
         $this->assertInstanceOf(ItemModel::class, $item);
         $this->assertIsInt($item->getRequestLimit());
         $this->assertIsInt($item->getRequestsRemaining());
@@ -378,11 +377,9 @@ class GuzzleClientTest extends TestCase
 
         try {
             $operation->getModel();
-        }
-        catch (ModelNotReturnedException $e) {
+        } catch (ModelNotReturnedException $e) {
             throw $e;
-        }
-        finally {
+        } finally {
             // ...clean up
             $this->deleteItemModel($model);
         }

@@ -3,8 +3,8 @@
 namespace Gitstore\Webflow\Iterators;
 
 use Generator;
-use Gitstore\Webflow\PaginatedIterator;
 use Gitstore\Webflow\Models\ItemModel;
+use Gitstore\Webflow\PaginatedIterator;
 use Gitstore\Webflow\Response;
 
 class ItemsIterator extends PaginatedIterator
