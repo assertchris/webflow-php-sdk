@@ -3,7 +3,6 @@
     "description": "A decent Webflow API client",
     "license": "MIT",
     "require": {
-        "guzzlehttp/guzzle": "^6.3",
         "nesbot/carbon": "^2.17"
     },
     "autoload": {
@@ -12,6 +11,7 @@
         }
     },
     "require-dev": {
+        "guzzlehttp/guzzle": "^6.3",
         "phpunit/phpunit": "^8.1",
         "vlucas/phpdotenv": "^3.3"
     },

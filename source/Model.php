@@ -2,8 +2,18 @@
 
 namespace Gitstore\Webflow;
 
+use Gitstore\Webflow\Exceptions\PropertyNotDefinedException;
+
 abstract class Model
 {
+    protected $response;
+    protected $data = [];
+
+    public function __construct(Response $response)
+    {
+        $this->response = $response;
+    }
+
     public function __call(string $method, array $parameters = [])
     {
         return $this->response->{$method}(...$parameters);
@@ -11,12 +21,12 @@ abstract class Model
 
     public function __get(string $property)
     {
-        if (property_exists($this, $property)) {
-            return $this->{$property};
+        if (isset($this->data[$property])) {
+            return $this->data[$property];
         }
 
-        if (isset($this->extra[$property])) {
-            return $this->extra[$property];
-        }
+        $class = get_class($this);
+
+        throw new PropertyNotDefinedException("{$property} is not defined for {$class}");
     }
 }

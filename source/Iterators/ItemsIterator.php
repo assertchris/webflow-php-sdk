@@ -2,11 +2,12 @@
 
 namespace Gitstore\Webflow\Iterators;
 
-use Gitstore\Webflow\Iterator;
-use Gitstore\Webflow\Models\Item;
+use Generator;
+use Gitstore\Webflow\PaginatedIterator;
+use Gitstore\Webflow\Models\ItemModel;
 use Gitstore\Webflow\Response;
 
-class Items extends Iterator
+class ItemsIterator extends PaginatedIterator
 {
     protected $count;
     protected $limit;
@@ -45,10 +46,10 @@ class Items extends Iterator
         return $this->total;
     }
 
-    protected function getGenerator(): \Generator
+    protected function getGenerator(): Generator
     {
         foreach ($this->response->getData()["items"] as $item) {
-            yield new Item(
+            yield new ItemModel(
                 $this->response->withBody(json_encode($item))
             );
         }

@@ -2,7 +2,15 @@
 
 namespace Gitstore\Webflow;
 
-abstract class Iterator implements \IteratorAggregate, \ArrayAccess
+use ArrayAccess;
+use ArrayIterator;
+use Countable;
+use Generator;
+use Gitstore\Webflow\Exceptions\MethodNotSupportedException;
+use Iterator as BaseIterator;
+use IteratorAggregate;
+
+abstract class Iterator implements ArrayAccess, Countable, IteratorAggregate
 {
     protected $response;
     protected $cached;
@@ -12,10 +20,10 @@ abstract class Iterator implements \IteratorAggregate, \ArrayAccess
         $this->response = $response;
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): BaseIterator
     {
         $this->warm();
-        return new \ArrayIterator($this->cached);
+        return new ArrayIterator($this->cached);
     }
 
     private function warm()
@@ -39,8 +47,7 @@ abstract class Iterator implements \IteratorAggregate, \ArrayAccess
 
     public function offsetSet($index, $value)
     {
-        $this->warm();
-        $this->cached[$index] = $value;
+        throw new MethodNotSupportedException("You can't add models to an iterator");
     }
 
     public function offsetUnset($index)
@@ -49,10 +56,16 @@ abstract class Iterator implements \IteratorAggregate, \ArrayAccess
         unset($this->cached[$index]);
     }
 
+    public function count()
+    {
+        $this->warm();
+        return count($this->cached);
+    }
+
     public function __call(string $method, array $parameters = [])
     {
         return $this->response->{$method}(...$parameters);
     }
 
-    abstract protected function getGenerator(): \Generator;
+    abstract protected function getGenerator(): Generator;
 }

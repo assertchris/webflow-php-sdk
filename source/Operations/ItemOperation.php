@@ -3,14 +3,13 @@
 namespace Gitstore\Webflow\Operations;
 
 use Gitstore\Webflow\Model;
-use Gitstore\Webflow\Models\Item;
+use Gitstore\Webflow\Models\ItemModel;
 use Gitstore\Webflow\Operation;
 
-class ItemCreated extends Operation
+abstract class ItemOperation extends Operation
 {
-
     public function getModel(): Model
     {
-        return new Item($this->response);
+        return new ItemModel($this->response);
     }
 }

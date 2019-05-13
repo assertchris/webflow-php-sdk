@@ -2,7 +2,7 @@
 
 namespace Gitstore\Webflow;
 
-final class Response
+class Response
 {
     private $headers;
     private $body;
