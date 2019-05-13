@@ -12,7 +12,6 @@ use Gitstore\Webflow\Models\SiteModel;
 use Gitstore\Webflow\Operations\ItemCreatedOperation;
 use Gitstore\Webflow\Operations\ItemDeletedOperation;
 use Gitstore\Webflow\Operations\ItemUpdatedOperation;
-use Gitstore\Webflow\Response;
 
 abstract class Client
 {
@@ -63,8 +62,7 @@ abstract class Client
                     "_draft" => false,
                 ], $data),
             ]), true);
-        }
-        catch (RequestFailedException $exception) {
+        } catch (RequestFailedException $exception) {
             $response = $exception->getPrevious()->getResponse();
 
             return new ItemCreatedOperation(new Response(
@@ -80,8 +78,7 @@ abstract class Client
             return new ItemUpdatedOperation($this->request("PUT", "/collections/{$collectionId}/items/{$itemId}", [
                 "fields" => $data,
             ]), true);
-        }
-        catch (RequestFailedException $exception) {
+        } catch (RequestFailedException $exception) {
             $response = $exception->getPrevious()->getResponse();
 
             return new ItemUpdatedOperation(new Response(
@@ -95,8 +92,7 @@ abstract class Client
     {
         try {
             return new ItemDeletedOperation($this->request("DELETE", "/collections/{$collectionId}/items/{$itemId}"), true);
-        }
-        catch (RequestFailedException $exception) {
+        } catch (RequestFailedException $exception) {
             $response = $exception->getPrevious()->getResponse();
 
             return new ItemDeletedOperation(new Response(
