@@ -30,7 +30,7 @@ Check out the tests for more advanced usage.
 
 ## Sponsor
 
-We use this library, for Gitstore. We're serious about maintaining the quality and functionality, but we could do with your support. If you're a company, who can afford to support the ongoing maintenance and improvement of this library; please consider doing so.
+We use this library for [gitstore](https://gitstore.app). We're serious about maintaining the quality and functionality, but we could do with your support. If you're a company who can afford to support the ongoing maintenance and improvement of this library, please consider doing so.
 
 <a href="https://enjoy.gitstore.app/repositories/assertchris/gitstore-webflow"><img src="https://enjoy.gitstore.app/repositories/assertchris/gitstore-webflow/plans/badge-82.svg"></a>
 
