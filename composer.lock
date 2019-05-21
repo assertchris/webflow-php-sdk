@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93ca87cc49a1c47dc56cbf2dc4b086e3",
+    "content-hash": "6aa8f6f1734f17e772127e540b008bf6",
     "packages": [
         {
             "name": "nesbot/carbon",
-            "version": "2.17.1",
+            "version": "2.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "96acbc0c03782e8115156dd4dd8b736267155066"
+                "reference": "8322b7bd1805be31867c13bf3cdaab948a0dd406"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/96acbc0c03782e8115156dd4dd8b736267155066",
-                "reference": "96acbc0c03782e8115156dd4dd8b736267155066",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/8322b7bd1805be31867c13bf3cdaab948a0dd406",
+                "reference": "8322b7bd1805be31867c13bf3cdaab948a0dd406",
                 "shasum": ""
             },
             "require": {
@@ -64,7 +64,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2019-04-27T18:04:27+00:00"
+            "time": "2019-05-16T18:44:35+00:00"
         },
         {
             "name": "symfony/contracts",
@@ -1181,16 +1181,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.1.4",
+            "version": "8.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "b534b017daaef2d7f60c6ee61e6aa2e13fdc6910"
+                "reference": "01392d4b5878aa617e8d9bc7a529e5febc8fe956"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b534b017daaef2d7f60c6ee61e6aa2e13fdc6910",
-                "reference": "b534b017daaef2d7f60c6ee61e6aa2e13fdc6910",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/01392d4b5878aa617e8d9bc7a529e5febc8fe956",
+                "reference": "01392d4b5878aa617e8d9bc7a529e5febc8fe956",
                 "shasum": ""
             },
             "require": {
@@ -1259,7 +1259,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-05-09T05:13:39+00:00"
+            "time": "2019-05-14T04:57:31+00:00"
         },
         {
             "name": "psr/http-message",
